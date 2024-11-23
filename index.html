@@ -5,25 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shadow Force - Checkout</title>
     <style>
-        /* General Body Styling */
+        /* General Styling */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
             color: #f0f0f0;
-            background-color: #121212;
-            display: flex;
+            background: url('https://wallpaperaccess.com/full/317501.jpg') no-repeat center center fixed;
+            background-size: cover;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Overlay for readability */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
         }
 
         /* Navigation Tabs */
         .tabs {
-            position: absolute;
-            top: 0;
             width: 100%;
-            background-color: #1a1a1a;
             display: flex;
             justify-content: center;
+            background-color: rgba(26, 26, 26, 0.9);
             border-bottom: 2px solid #333;
         }
 
@@ -33,8 +45,9 @@
             padding: 15px 0;
             font-weight: bold;
             cursor: pointer;
-            background-color: #1a1a1a;
-            transition: background-color 0.3s;
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+            color: #ccc;
         }
 
         .tab.active {
@@ -44,6 +57,7 @@
 
         .tab:hover {
             background-color: #005a93;
+            color: #fff;
         }
 
         /* Panels */
@@ -62,53 +76,58 @@
         }
 
         /* Info Panel Styling */
-        .info {
-            text-align: center;
-        }
-
-        .info h2 {
-            font-size: 28px;
+        .info h2, .checkout h2 {
+            font-size: 32px;
             margin-bottom: 20px;
         }
 
-        .info p {
+        .info p, .checkout p {
             font-size: 18px;
             line-height: 1.6;
+            text-align: center;
         }
 
-        /* Checkout Styling */
+        /* Buttons */
         .btn {
-            width: 100%;
-            margin: 10px 0;
+            width: 80%;
+            max-width: 300px;
+            margin: 15px 0;
             padding: 15px;
             font-size: 18px;
             font-weight: bold;
             background-color: #0070ba;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             color: #fff;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            box-shadow: 0px 5px 15px rgba(0, 112, 186, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #005a93;
+            transform: scale(1.05);
+            box-shadow: 0px 10px 20px rgba(0, 112, 186, 0.6);
         }
 
-        .btn.secondary {
-            background-color: #444;
-            color: #bbb;
+        /* Purchase Animation */
+        .purchase-confirmation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        .btn.secondary:hover {
-            background-color: #333;
-        }
-
-        .highlight {
-            color: #ff3b3b;
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
+        .purchase-confirmation.active {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
     <script>
@@ -121,13 +140,22 @@
 
         function buyService(link) {
             window.open(link, '_blank');
+            showPurchaseConfirmation();
+        }
+
+        function showPurchaseConfirmation() {
+            const confirmation = document.querySelector('.purchase-confirmation');
+            confirmation.classList.add('active');
+            setTimeout(() => {
+                confirmation.classList.remove('active');
+            }, 3000);
         }
     </script>
 </head>
 <body>
     <!-- Tabs -->
     <div class="tabs">
-        <div id="info-tab" class="tab active" onclick="switchTab('info')">Home</div>
+        <div id="info-tab" class="tab active" onclick="switchTab('info')">Info</div>
         <div id="checkout-tab" class="tab" onclick="switchTab('checkout')">Checkout</div>
     </div>
 
@@ -139,7 +167,7 @@
     </div>
 
     <!-- Checkout Panel -->
-    <div id="checkout" class="panel">
+    <div id="checkout" class="panel checkout">
         <h2>Select Your Service</h2>
         <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
             VIP Escort - 25 Robux
@@ -150,6 +178,11 @@
         <button class="btn" onclick="buyService('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
             Purchase Bounty - 30 Robux
         </button>
+    </div>
+
+    <!-- Purchase Confirmation -->
+    <div class="purchase-confirmation">
+        <p>Thank you for your purchase! Please check the game for updates.</p>
     </div>
 </body>
 </html>
