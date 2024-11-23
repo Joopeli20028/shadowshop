@@ -119,16 +119,8 @@
             document.getElementById(tab + '-tab').classList.add('active');
         }
 
-        function selectService(service, cost, shirtLink) {
-            document.getElementById('selected-service').innerText = service;
-            document.getElementById('shirt-link').href = shirtLink;
-            document.getElementById('shirt-link').innerText = service + " Shirt";
-            document.getElementById('subtotal').innerText = cost + " Robux";
-            switchTab('checkout');
-        }
-
-        function purchaseBounty() {
-            alert('You have successfully purchased a bounty for 30 Robux!');
+        function buyService(link) {
+            window.open(link, '_blank');
         }
     </script>
 </head>
@@ -149,9 +141,15 @@
     <!-- Checkout Panel -->
     <div id="checkout" class="panel">
         <h2>Select Your Service</h2>
-        <button class="btn" onclick="selectService('VIP Escort', 25, 'https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">VIP Escort - 25 Robux</button>
-        <button class="btn" onclick="selectService('Normal Escort', 15, 'https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">Normal Escort - 15 Robux</button>
-        <button class="btn" onclick="purchaseBounty()">Purchase Bounty - 30 Robux</button>
+        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
+            VIP Escort - 25 Robux
+        </button>
+        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">
+            Normal Escort - 15 Robux
+        </button>
+        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
+            Purchase Bounty - 30 Robux
+        </button>
     </div>
 </body>
 </html>
