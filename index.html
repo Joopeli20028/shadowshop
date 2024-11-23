@@ -16,44 +16,67 @@
             height: 100vh;
         }
 
-        /* Left-side Image Panel */
-        .left-side {
-            flex: 1;
-            background: url('https://media.discordapp.net/attachments/1302688789835022387/1307316617843048488/Screenshot_2024-11-15_223954.png?ex=6739dcfa&is=67388b7a&hm=093010955a22858e3657c76510eb81c90eb97cbe9d9dbd8c1399939b3860e18a&=&format=webp&quality=lossless&width=1440&height=403') no-repeat center center;
-            background-size: cover;
+        /* Navigation Tabs */
+        .tabs {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid #333;
         }
 
-        /* Right-side Checkout Panel */
-        .right-side {
+        .tab {
             flex: 1;
-            display: flex;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #1a1a1a;
+            transition: background-color 0.3s;
+        }
+
+        .tab.active {
+            background-color: #0070ba;
+            color: #fff;
+        }
+
+        .tab:hover {
+            background-color: #005a93;
+        }
+
+        /* Panels */
+        .panel {
+            display: none;
+            flex: 1;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #181818;
             padding: 40px;
-        }
-
-        /* Titles */
-        .header {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        /* Steps */
-        .step {
-            display: none;
-            text-align: center;
             width: 100%;
-            max-width: 400px;
         }
 
-        .step.active {
-            display: block;
+        .panel.active {
+            display: flex;
         }
 
-        /* Buttons */
+        /* Info Panel Styling */
+        .info {
+            text-align: center;
+        }
+
+        .info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Checkout Styling */
         .btn {
             width: 100%;
             margin: 10px 0;
@@ -81,48 +104,6 @@
             background-color: #333;
         }
 
-        /* Checkboxes */
-        .checkbox-container {
-            margin: 30px 0;
-            text-align: left;
-            font-size: 16px;
-        }
-
-        .checkbox-container label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .checkbox-container input {
-            margin-right: 10px;
-            transform: scale(1.2);
-        }
-
-        /* Links */
-        a.link {
-            color: #0070ba;
-            text-decoration: none;
-        }
-
-        a.link:hover {
-            text-decoration: underline;
-        }
-
-        /* Summary */
-        .summary {
-            background-color: #222;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        .summary p {
-            margin: 5px 0;
-        }
-
-        /* Highlights */
         .highlight {
             color: #ff3b3b;
             font-size: 20px;
@@ -131,11 +112,11 @@
         }
     </style>
     <script>
-        let currentStep = 1;
-
-        function showStep(step) {
-            document.querySelectorAll('.step').forEach((el) => el.classList.remove('active'));
-            document.getElementById(`step-${step}`).classList.add('active');
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
         }
 
         function selectService(service, cost, shirtLink) {
@@ -143,66 +124,34 @@
             document.getElementById('shirt-link').href = shirtLink;
             document.getElementById('shirt-link').innerText = service + " Shirt";
             document.getElementById('subtotal').innerText = cost + " Robux";
-            showStep(2);
+            switchTab('checkout');
         }
 
-        function validateStep2() {
-            const checkboxes = document.querySelectorAll('#step-2 input[type="checkbox"]');
-            const isChecked = Array.from(checkboxes).every((checkbox) => checkbox.checked);
-            const continueButton = document.getElementById('step-2-continue');
-            continueButton.disabled = !isChecked;
-            continueButton.classList.toggle('secondary', !isChecked);
-        }
-
-        function restart() {
-            showStep(1);
+        function purchaseBounty() {
+            alert('You have successfully purchased a bounty for 30 Robux!');
         }
     </script>
 </head>
 <body>
-    <div class="left-side"></div>
-    <div class="right-side">
-        <div class="header">Shadow Force Checkout</div>
+    <!-- Tabs -->
+    <div class="tabs">
+        <div id="info-tab" class="tab active" onclick="switchTab('info')">Info</div>
+        <div id="checkout-tab" class="tab" onclick="switchTab('checkout')">Checkout</div>
+    </div>
 
-        <!-- Step 1: Select Service -->
-        <div id="step-1" class="step active">
-            <h2>Select Your Service</h2>
-            <button class="btn" onclick="selectService('VIP Escort', 25, 'https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">VIP Escort - 25 Robux</button>
-            <button class="btn" onclick="selectService('Normal Escort', 15, 'https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">Normal Escort - 15 Robux</button>
-        </div>
+    <!-- Info Panel -->
+    <div id="info" class="panel active info">
+        <h2>Welcome to Shadow Force</h2>
+        <p>Shadow Force provides elite escort services in the game, ensuring your safety and enhancing your experience.</p>
+        <p>Choose between VIP and Normal escort services or purchase a bounty for added excitement.</p>
+    </div>
 
-        <!-- Step 2: Discord & Payment -->
-        <div id="step-2" class="step">
-            <h2>Complete the Steps</h2>
-            <div class="checkbox-container">
-                <label>
-                    <input type="checkbox" onchange="validateStep2()"> I have joined the 
-                    <a href="https://discord.gg/Zsj9HuRS" class="link" target="_blank">Discord Server</a>.
-                </label>
-                <label>
-                    <input type="checkbox" onchange="validateStep2()"> I have purchased the 
-                    <a id="shirt-link" href="#" class="link" target="_blank"></a>.
-                </label>
-                <label>
-                    <input type="checkbox" onchange="validateStep2()"> I agree to the 
-                    <a href="https://docs.google.com/document/d/1xrsNmbaYl6RLLXrEsqpR2PNfLYBANR7hLjGiHH1-AhQ/edit?usp=sharing" class="link" target="_blank">Terms and Conditions</a>.
-                </label>
-            </div>
-            <div class="summary">
-                <p><strong>Service:</strong> <span id="selected-service"></span></p>
-                <p><strong>Subtotal:</strong> <span id="subtotal"></span></p>
-            </div>
-            <button class="btn secondary" onclick="showStep(1)">Back</button>
-            <button class="btn secondary" id="step-2-continue" disabled onclick="showStep(3)">Continue</button>
-        </div>
-
-        <!-- Step 3: Confirmation -->
-        <div id="step-3" class="step">
-            <h2>Order Confirmed</h2>
-            <p class="highlight">Submit proof of your purchase in our Discord!</p>
-            <p>Once proof is submitted, we will assign you your rank.</p>
-            <button class="btn" onclick="restart()">Start Over</button>
-        </div>
+    <!-- Checkout Panel -->
+    <div id="checkout" class="panel">
+        <h2>Select Your Service</h2>
+        <button class="btn" onclick="selectService('VIP Escort', 25, 'https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">VIP Escort - 25 Robux</button>
+        <button class="btn" onclick="selectService('Normal Escort', 15, 'https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">Normal Escort - 15 Robux</button>
+        <button class="btn" onclick="purchaseBounty()">Purchase Bounty - 30 Robux</button>
     </div>
 </body>
 </html>
