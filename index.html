@@ -10,13 +10,14 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
+            background-color: #000;
             color: #f5f5f5;
-            background-color: #121212;
-            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         h1, h2 {
             font-weight: 700;
+            color: #fff;
             margin-bottom: 10px;
         }
 
@@ -24,49 +25,87 @@
             max-width: 800px;
             line-height: 1.8;
             margin: 0 auto;
+            color: #ddd;
         }
 
-        /* Container */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Discord Invite Button */
+        .discord-invite {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #5865f2;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .discord-invite:hover {
+            background-color: #4752c4;
+            transform: translateY(-2px);
+        }
+
+        /* Image Carousel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 50vh;
+            overflow: hidden;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .carousel-control.prev {
+            left: 10px;
+        }
+
+        .carousel-control.next {
+            right: 10px;
+        }
+
+        /* Content Sections */
         .container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow-y: auto;
-            scroll-snap-type: y mandatory;
-        }
-
-        .layer {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
-            padding: 20px;
-            scroll-snap-align: start;
+            padding: 40px 20px;
         }
 
-        .layer:nth-child(1) {
-            background: linear-gradient(135deg, #1f1f2f, #2e2e4e);
-        }
-
-        .layer:nth-child(2) {
-            background: linear-gradient(135deg, #2e2e4e, #404061);
-        }
-
-        .layer:nth-child(3) {
-            background: linear-gradient(135deg, #404061, #50507b);
-        }
-
-        /* Discord Style Card */
         .discord-style {
+            background: #111;
             padding: 30px;
-            background: rgba(40, 40, 40, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            margin: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            margin: 20px auto;
         }
 
         /* Buttons */
@@ -75,7 +114,7 @@
             font-size: 18px;
             font-weight: 600;
             color: #fff;
-            background-color: #0a74da;
+            background-color: #333;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -84,106 +123,79 @@
         }
 
         .btn:hover {
-            background-color: #005bb5;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(10, 116, 218, 0.5);
-        }
-
-        /* Purchase Confirmation */
-        .purchase-confirmation {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 15px 25px;
-            background-color: #121212;
-            color: #00ff85;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .purchase-confirmation.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1, h2 {
-                font-size: 1.5rem;
-            }
-
-            p {
-                font-size: 1rem;
-            }
-
-            .btn {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
+            background-color: #555;
         }
     </style>
     <script>
-        function buyService(link) {
-            window.open(link, '_blank');
-            showPurchaseConfirmation();
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const carousel = document.querySelector('.carousel-images');
+            const slides = document.querySelectorAll('.carousel img');
+            currentIndex = (index + slides.length) % slides.length;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
-        function showPurchaseConfirmation() {
-            const confirmation = document.querySelector('.purchase-confirmation');
-            confirmation.classList.add('active');
-            setTimeout(() => {
-                confirmation.classList.remove('active');
-            }, 3000);
+        function nextSlide() {
+            showSlide(currentIndex + 1);
         }
+
+        function prevSlide() {
+            showSlide(currentIndex - 1);
+        }
+
+        setInterval(nextSlide, 5000); // Auto-rotate every 5 seconds
     </script>
 </head>
 <body>
+    <!-- Discord Invite -->
+    <a href="https://discord.gg/example" target="_blank" class="discord-invite">
+        Join Our Discord
+    </a>
+
+    <!-- Image Carousel -->
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="https://via.placeholder.com/1920x500/111111/ffffff?text=Shadow+Force+Security" alt="Security Service 1">
+            <img src="https://via.placeholder.com/1920x500/000000/ffffff?text=VIP+Protection" alt="Security Service 2">
+            <img src="https://via.placeholder.com/1920x500/111111/ffffff?text=Elite+Bounty+Support" alt="Security Service 3">
+        </div>
+        <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
+        <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <!-- Content Sections -->
     <div class="container">
         <!-- About Us -->
-        <div class="layer">
+        <div class="discord-style">
             <h1>Welcome to Shadow Force</h1>
-            <div class="discord-style">
-                <p>Shadow Force provides elite in-game security for Roblox ERLC. From VIP escort missions to bounty protection, we ensure a premium experience with utmost professionalism.</p>
-            </div>
+            <p>Shadow Force provides elite in-game security for Roblox ERLC. We offer professional services to protect and serve in high-stakes missions.</p>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="discord-style">
+            <h2>Why Choose Us?</h2>
+            <ul style="text-align: left; color: #bbb;">
+                <li>Highly trained security teams</li>
+                <li>Rapid response and reliability</li>
+                <li>Discretion and professionalism</li>
+                <li>Specialized in VIP escort missions</li>
+            </ul>
         </div>
 
         <!-- Services -->
-        <div class="layer">
-            <h2>Why Choose Us?</h2>
-            <div class="discord-style">
-                <ul>
-                    <li>Highly trained security teams.</li>
-                    <li>Rapid response and efficient operations.</li>
-                    <li>Absolute discretion and confidentiality.</li>
-                    <li>Expertise in handling high-stakes missions.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Checkout -->
-        <div class="layer">
+        <div class="discord-style">
             <h2>Our Services</h2>
-            <div class="discord-style">
-                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
-                    VIP Escort - 25 Robux
-                </button>
-                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">
-                    Normal Escort - 15 Robux
-                </button>
-                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
-                    Purchase Bounty - 30 Robux
-                </button>
-            </div>
+            <button class="btn" onclick="window.open('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
+                VIP Escort - 25 Robux
+            </button>
+            <button class="btn" onclick="window.open('https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">
+                Normal Escort - 15 Robux
+            </button>
+            <button class="btn" onclick="window.open('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
+                Purchase Bounty - 30 Robux
+            </button>
         </div>
-    </div>
-
-    <!-- Purchase Confirmation -->
-    <div class="purchase-confirmation">
-        <p>Thank you for your purchase! Check your account for updates.</p>
     </div>
 </body>
 </html>
