@@ -10,117 +10,120 @@
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            color: #f0f0f0;
-            background: url('https://i.ibb.co/QHy9SM3/image-2024-12-06-211922416.png') no-repeat center center fixed;
-            background-size: cover;
+            color: #e0e0e0;
+            background-color: #0d1117;
             height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Scrollable Layers Container */
+        .container {
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
         }
 
-        /* Overlay for readability */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: -1;
-        }
-
-        /* Navigation Tabs */
-        .tabs {
-            width: 100%;
+        .layer {
+            height: 100vh;
+            scroll-snap-align: start;
             display: flex;
-            justify-content: center;
-            background-color: rgba(26, 26, 26, 0.9);
-            border-bottom: 2px solid #333;
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px 0;
-            font-weight: bold;
-            cursor: pointer;
-            background-color: transparent;
-            transition: background-color 0.3s, color 0.3s;
-            color: #ccc;
-        }
-
-        .tab.active {
-            background-color: #0070ba;
-            color: #fff;
-        }
-
-        .tab:hover {
-            background-color: #005a93;
-            color: #fff;
-        }
-
-        /* Panels */
-        .panel {
-            display: none;
-            flex: 1;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            width: 100%;
-        }
-
-        .panel.active {
-            display: flex;
-        }
-
-        /* Section Titles and Text */
-        .panel h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .panel p {
-            font-size: 18px;
-            line-height: 1.6;
             text-align: center;
-            margin-bottom: 20px;
+            padding: 20px;
+            transition: background-color 0.5s ease;
         }
 
-        /* Buttons */
+        .layer:nth-child(1) {
+            background: linear-gradient(135deg, #1e1e2c, #2c2c44);
+        }
+
+        .layer:nth-child(2) {
+            background: linear-gradient(135deg, #2c2c44, #3b3b5f);
+        }
+
+        .layer:nth-child(3) {
+            background: linear-gradient(135deg, #3b3b5f, #4a4a78);
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            line-height: 1.8;
+        }
+
         .btn {
-            width: 80%;
-            max-width: 300px;
-            margin: 15px 0;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            color: #fff;
             background-color: #0070ba;
             border: none;
-            border-radius: 50px;
-            color: #fff;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0px 5px 15px rgba(0, 112, 186, 0.4);
+            box-shadow: 0px 5px 15px rgba(0, 112, 186, 0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 10px 20px rgba(0, 112, 186, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0px 10px 20px rgba(0, 112, 186, 0.8);
         }
 
-        /* Purchase Animation */
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .discord-style {
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        li:before {
+            content: '\2713';
+            color: #00d1b2;
+            margin-right: 10px;
+        }
+
         .purchase-confirmation {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+            background-color: #0d1117;
+            color: #00d1b2;
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -132,13 +135,6 @@
         }
     </style>
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.panel').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-            document.getElementById(tab + '-tab').classList.add('active');
-        }
-
         function buyService(link) {
             window.open(link, '_blank');
             showPurchaseConfirmation();
@@ -154,47 +150,43 @@
     </script>
 </head>
 <body>
-    <!-- Tabs -->
-    <div class="tabs">
-        <div id="info-tab" class="tab active" onclick="switchTab('info')">About Us</div>
-        <div id="services-tab" class="tab" onclick="switchTab('services')">Service Quality</div>
-        <div id="checkout-tab" class="tab" onclick="switchTab('checkout')">Checkout</div>
-    </div>
+    <div class="container">
+        <!-- About Us -->
+        <div class="layer">
+            <h1>Welcome to Shadow Force</h1>
+            <div class="discord-style fade-in">
+                <p>Shadow Force is the pinnacle of in-game security for Roblox ERLC. Specializing in escorting high-level personnel, we ensure a safe and immersive experience. Trust, professionalism, and expertise define our mission.</p>
+            </div>
+        </div>
 
-    <!-- About Us Panel -->
-    <div id="info" class="panel active">
-        <h2>About Shadow Force</h2>
-        <p>Shadow Force is a trusted provider of elite security solutions in the gaming world. 
-        We specialize in ensuring your safety, privacy, and peace of mind while enhancing your gaming experience.
-        </p>
-        <p>Our team consists of highly trained professionals who understand the value of vigilance and expertise.
-        Whether you're on a casual adventure or completing high-stakes missions, we've got you covered.</p>
-    </div>
+        <!-- Services -->
+        <div class="layer">
+            <h2>Why Choose Shadow Force?</h2>
+            <div class="discord-style fade-in">
+                <ul>
+                    <li>Highly trained security teams.</li>
+                    <li>Rapid response and reliable operations.</li>
+                    <li>Discretion and confidentiality guaranteed.</li>
+                    <li>Unparalleled protection for high-level missions.</li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Service Quality Panel -->
-    <div id="services" class="panel">
-        <h2>Why Choose Us?</h2>
-        <p>Shadow Force prioritizes:</p>
-        <ul style="text-align: left; max-width: 600px;">
-            <li>✓ Professional-grade escort services tailored to your needs.</li>
-            <li>✓ Reliable response times to ensure uninterrupted gameplay.</li>
-            <li>✓ Discreet and secure bounty placements for exciting challenges.</li>
-            <li>✓ Commitment to excellence with every engagement.</li>
-        </ul>
-    </div>
-
-    <!-- Checkout Panel -->
-    <div id="checkout" class="panel">
-        <h2>Select Your Service</h2>
-        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
-            VIP Escort - 25 Robux
-        </button>
-        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">
-            Normal Escort - 15 Robux
-        </button>
-        <button class="btn" onclick="buyService('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
-            Purchase Bounty - 30 Robux
-        </button>
+        <!-- Checkout -->
+        <div class="layer">
+            <h2>Our Services</h2>
+            <div class="discord-style fade-in">
+                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
+                    VIP Escort - 25 Robux
+                </button>
+                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/126453742676608/Shadow-Force-Suit')">
+                    Normal Escort - 15 Robux
+                </button>
+                <button class="btn" onclick="buyService('https://www.roblox.com/catalog/135691543506625/Shadow-Force-Paid-Bounty')">
+                    Purchase Bounty - 30 Robux
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Purchase Confirmation -->
