@@ -9,121 +9,97 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            color: #e0e0e0;
-            background-color: #0d1117;
-            height: 100vh;
-            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            color: #f5f5f5;
+            background-color: #121212;
+            scroll-behavior: smooth;
         }
 
-        /* Scrollable Layers Container */
+        h1, h2 {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        p {
+            max-width: 800px;
+            line-height: 1.8;
+            margin: 0 auto;
+        }
+
+        /* Container */
         .container {
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow-y: auto;
             scroll-snap-type: y mandatory;
-            overflow-y: scroll;
         }
 
         .layer {
             height: 100vh;
-            scroll-snap-align: start;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
-            transition: background-color 0.5s ease;
+            scroll-snap-align: start;
         }
 
         .layer:nth-child(1) {
-            background: linear-gradient(135deg, #1e1e2c, #2c2c44);
+            background: linear-gradient(135deg, #1f1f2f, #2e2e4e);
         }
 
         .layer:nth-child(2) {
-            background: linear-gradient(135deg, #2c2c44, #3b3b5f);
+            background: linear-gradient(135deg, #2e2e4e, #404061);
         }
 
         .layer:nth-child(3) {
-            background: linear-gradient(135deg, #3b3b5f, #4a4a78);
+            background: linear-gradient(135deg, #404061, #50507b);
         }
 
-        h1, h2 {
-            margin-bottom: 10px;
+        /* Discord Style Card */
+        .discord-style {
+            padding: 30px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            margin: 20px;
         }
 
-        p {
-            max-width: 600px;
-            margin: 0 auto 20px auto;
-            line-height: 1.8;
-        }
-
+        /* Buttons */
         .btn {
             padding: 15px 30px;
-            margin: 10px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
             color: #fff;
-            background-color: #0070ba;
+            background-color: #0a74da;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0px 5px 15px rgba(0, 112, 186, 0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            margin: 10px;
         }
 
         .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0px 10px 20px rgba(0, 112, 186, 0.8);
+            background-color: #005bb5;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(10, 116, 218, 0.5);
         }
 
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .discord-style {
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-        }
-
-        li {
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        li:before {
-            content: '\2713';
-            color: #00d1b2;
-            margin-right: 10px;
-        }
-
+        /* Purchase Confirmation */
         .purchase-confirmation {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #0d1117;
-            color: #00d1b2;
             padding: 15px 25px;
-            border-radius: 25px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            background-color: #121212;
+            color: #00ff85;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
@@ -132,6 +108,22 @@
         .purchase-confirmation.active {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
         }
     </style>
     <script>
@@ -154,20 +146,20 @@
         <!-- About Us -->
         <div class="layer">
             <h1>Welcome to Shadow Force</h1>
-            <div class="discord-style fade-in">
-                <p>Shadow Force is the pinnacle of in-game security for Roblox ERLC. Specializing in escorting high-level personnel, we ensure a safe and immersive experience. Trust, professionalism, and expertise define our mission.</p>
+            <div class="discord-style">
+                <p>Shadow Force provides elite in-game security for Roblox ERLC. From VIP escort missions to bounty protection, we ensure a premium experience with utmost professionalism.</p>
             </div>
         </div>
 
         <!-- Services -->
         <div class="layer">
-            <h2>Why Choose Shadow Force?</h2>
-            <div class="discord-style fade-in">
+            <h2>Why Choose Us?</h2>
+            <div class="discord-style">
                 <ul>
                     <li>Highly trained security teams.</li>
-                    <li>Rapid response and reliable operations.</li>
-                    <li>Discretion and confidentiality guaranteed.</li>
-                    <li>Unparalleled protection for high-level missions.</li>
+                    <li>Rapid response and efficient operations.</li>
+                    <li>Absolute discretion and confidentiality.</li>
+                    <li>Expertise in handling high-stakes missions.</li>
                 </ul>
             </div>
         </div>
@@ -175,7 +167,7 @@
         <!-- Checkout -->
         <div class="layer">
             <h2>Our Services</h2>
-            <div class="discord-style fade-in">
+            <div class="discord-style">
                 <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
                     VIP Escort - 25 Robux
                 </button>
@@ -191,7 +183,7 @@
 
     <!-- Purchase Confirmation -->
     <div class="purchase-confirmation">
-        <p>Thank you for your purchase! Please check the game for updates.</p>
+        <p>Thank you for your purchase! Check your account for updates.</p>
     </div>
 </body>
 </html>
