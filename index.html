@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shadow Force - Checkout</title>
+    <title>Shadow Force - Elite Security</title>
     <style>
         /* General Styling */
         body {
@@ -75,16 +75,17 @@
             display: flex;
         }
 
-        /* Info Panel Styling */
-        .info h2, .checkout h2 {
+        /* Section Titles and Text */
+        .panel h2 {
             font-size: 32px;
             margin-bottom: 20px;
         }
 
-        .info p, .checkout p {
+        .panel p {
             font-size: 18px;
             line-height: 1.6;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         /* Buttons */
@@ -155,19 +156,35 @@
 <body>
     <!-- Tabs -->
     <div class="tabs">
-        <div id="info-tab" class="tab active" onclick="switchTab('info')">Info</div>
+        <div id="info-tab" class="tab active" onclick="switchTab('info')">About Us</div>
+        <div id="services-tab" class="tab" onclick="switchTab('services')">Service Quality</div>
         <div id="checkout-tab" class="tab" onclick="switchTab('checkout')">Checkout</div>
     </div>
 
-    <!-- Info Panel -->
-    <div id="info" class="panel active info">
-        <h2>Welcome to Shadow Force</h2>
-        <p>Shadow Force provides elite escort services in the game, ensuring your safety and enhancing your experience.</p>
-        <p>Choose between VIP and Normal escort services or purchase a bounty for added excitement.</p>
+    <!-- About Us Panel -->
+    <div id="info" class="panel active">
+        <h2>About Shadow Force</h2>
+        <p>Shadow Force is a trusted provider of elite security solutions in the gaming world. 
+        We specialize in ensuring your safety, privacy, and peace of mind while enhancing your gaming experience.
+        </p>
+        <p>Our team consists of highly trained professionals who understand the value of vigilance and expertise.
+        Whether you're on a casual adventure or completing high-stakes missions, we've got you covered.</p>
+    </div>
+
+    <!-- Service Quality Panel -->
+    <div id="services" class="panel">
+        <h2>Why Choose Us?</h2>
+        <p>Shadow Force prioritizes:</p>
+        <ul style="text-align: left; max-width: 600px;">
+            <li>✓ Professional-grade escort services tailored to your needs.</li>
+            <li>✓ Reliable response times to ensure uninterrupted gameplay.</li>
+            <li>✓ Discreet and secure bounty placements for exciting challenges.</li>
+            <li>✓ Commitment to excellence with every engagement.</li>
+        </ul>
     </div>
 
     <!-- Checkout Panel -->
-    <div id="checkout" class="panel checkout">
+    <div id="checkout" class="panel">
         <h2>Select Your Service</h2>
         <button class="btn" onclick="buyService('https://www.roblox.com/catalog/100900728738842/Shadow-Force-VIP-Suit')">
             VIP Escort - 25 Robux
